@@ -10,6 +10,9 @@ package com.nikoskatsanos.jutils.core.time;
 @FunctionalInterface
 public interface NowService {
 
+    /**
+     * @return the number of milliseconds since 1st January 1970 UTC
+     */
     long nowMillis();
 
 }
