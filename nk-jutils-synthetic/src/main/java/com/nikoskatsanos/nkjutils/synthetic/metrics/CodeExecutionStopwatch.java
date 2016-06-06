@@ -9,8 +9,9 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * <p>A simple code execution stopwatch, which encapsulates a {@link com.google.common.base.Stopwatch} and can conveniently be used in micro benchmarking. It implements {@link
- * java.io.Closeable} so that it can be used with try-with-resources.</p> <p>
+ * <p>A simple code execution stopwatch, which encapsulates a {@link com.google.common.base.Stopwatch} and can
+ * conveniently be used in micro benchmarking. It implements {@link java.io.Closeable} so that it can be used with
+ * try-with-resources.</p> <p>
  * <pre>
  *         {@code
  *
@@ -101,6 +102,7 @@ public class CodeExecutionStopwatch implements Closeable, AutoCloseable {
             stopwatch.stop();
         }
         this.finalExecutionTime = stopwatch.elapsed(this.timeUnit);
-        LOGGER.info("TASK [{}] ELAPSED_TIME [{} {}]", this.executionTaskName, this.finalExecutionTime, this.timeUnit.toString());
+        LOGGER.info("TASK [{}] ELAPSED_TIME [{} {}]", this.executionTaskName, this.finalExecutionTime, this.timeUnit
+                .toString());
     }
 }
