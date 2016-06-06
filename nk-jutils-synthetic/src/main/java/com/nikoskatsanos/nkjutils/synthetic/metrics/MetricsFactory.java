@@ -4,23 +4,26 @@ import com.codahale.metrics.Counter;
 import com.codahale.metrics.Gauge;
 import com.codahale.metrics.Histogram;
 import com.codahale.metrics.JmxReporter;
-import com.codahale.metrics.Metric;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Timer;
-import com.nikoskatsanos.jutils.core.VarHolder;
-import com.nikoskatsanos.jutils.core.threading.ThreadUtils;
 
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
 /**
+ * <p>Metrics factory for creating singleton {@link com.codahale.metrics.MetricRegistry} and {@link
+ * com.codahale.metrics.Metric}</p>
+ *
  * @author nikkatsa
  */
 public class MetricsFactory {
 
     private static AtomicBoolean HAS_INITIALIZED = new AtomicBoolean(false);
 
+    /**
+     * @return A singleton instance of a {@link MetricRegistry}. This instance of the {@link MetricRegistry} can be used
+     * throughout an application in order to re-use the metrics created
+     */
     public static final MetricRegistry getInstance() {
         final MetricRegistry metrics = MetricsRegistryHolder.METRICS;
         if (HAS_INITIALIZED.compareAndSet(false, true)) {
@@ -29,10 +32,17 @@ public class MetricsFactory {
         return metrics;
     }
 
+    /**
+     * @return A brand new instance of a {@link MetricRegistry}, by also exposing it in JMX
+     */
     public static final MetricRegistry getNewInstance() {
         return MetricsFactory.getNewInstance(true);
     }
 
+    /**
+     * @param exposeToJMX boolean indicating if the returned {@link MetricRegistry} should be exposed to JMX or not
+     * @return A brand new instance of a {@link MetricRegistry}
+     */
     public static final MetricRegistry getNewInstance(final boolean exposeToJMX) {
         final MetricRegistry metrics = new MetricRegistry();
         if (exposeToJMX) {
@@ -45,7 +55,8 @@ public class MetricsFactory {
         return MetricsFactory.<T>createGauge(MetricsFactory.class, metricName, gaugeFunc);
     }
 
-    public static final <T> Gauge<T> createGauge(final Class<?> clazz, final String metricName, final Supplier<T> gaugeFunc) {
+    public static final <T> Gauge<T> createGauge(final Class<?> clazz, final String metricName, final Supplier<T>
+            gaugeFunc) {
         return MetricsFactory.getInstance().register(MetricRegistry.name(clazz, metricName), new Gauge<T>() {
             @Override
             public T getValue() {
@@ -68,21 +79,5 @@ public class MetricsFactory {
 
     private static class MetricsRegistryHolder {
         public static final MetricRegistry METRICS = new MetricRegistry();
-    }
-
-    public static void main(final String... args) {
-        final VarHolder<String> myString = new VarHolder<String>("");
-        MetricsFactory.<String>createGauge(MetricsFactory.class, "nikosG", () -> myString.getValue());
-
-        while (true) {
-            if (myString.getValue().length() > 2000) {
-                myString.setValue("");
-            }
-            for (char c = 'a'; c < 'z'; c++) {
-                myString.setValue(myString.getValue() + c);
-            }
-
-            ThreadUtils.sleepWithoutInterruption(3000L, TimeUnit.MILLISECONDS);
-        }
     }
 }
