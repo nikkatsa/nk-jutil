@@ -190,6 +190,7 @@
                 <configuration>
                     <format>html</format>
                     <aggregate>true</aggregate>
+                    <check/>
                 </configuration>
                 <reportSets>
                     <reportSet>
