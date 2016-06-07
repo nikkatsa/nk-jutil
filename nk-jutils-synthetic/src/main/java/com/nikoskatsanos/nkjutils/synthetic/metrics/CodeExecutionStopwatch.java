@@ -92,10 +92,6 @@ public class CodeExecutionStopwatch implements Closeable, AutoCloseable {
         return finalExecutionTime;
     }
 
-    public void setFinalExecutionTime(long finalExecutionTime) {
-        this.finalExecutionTime = finalExecutionTime;
-    }
-
     @Override
     public void close() throws IOException {
         if (this.stopwatch.isRunning()) {

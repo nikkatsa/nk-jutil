@@ -1,6 +1,8 @@
 package com.nikoskatsanos.nkjutils.synthetic.metrics;
 
 import com.nikoskatsanos.jutils.core.CloseableUtils;
+import com.nikoskatsanos.jutils.core.time.NowService;
+import com.nikoskatsanos.jutils.core.time.SystemClockNowService;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -71,5 +74,27 @@ public class CodeExecutionStopwatchTest {
         } finally {
             assertTrue(true);
         }
+    }
+
+    @Test
+    public void testStopwatchPause() {
+        final CodeExecutionStopwatch stopwatch = new CodeExecutionStopwatch("MY_TASK");
+        stopwatch.start();
+        final long millis = stopwatch.pause();
+        assertTrue(millis > 0L);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testStopwatchPause_withoutStart() {
+        final CodeExecutionStopwatch stopwatch = new CodeExecutionStopwatch("MY_TASK");
+        stopwatch.pause();
+    }
+
+    @Test
+    public void testStopwatchProperties() {
+        final CodeExecutionStopwatch stopwatch = new CodeExecutionStopwatch("MY_TASK", TimeUnit.NANOSECONDS, false);
+        assertEquals("MY_TASK", stopwatch.getExecutionTaskName());
+        assertEquals(TimeUnit.NANOSECONDS, stopwatch.getTimeUnit());
+        assertEquals(false, stopwatch.isStartUponConstruction());
     }
 }
