@@ -5,7 +5,8 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
- * <p>Simple logger wrapper. It provides an API for explicitly using the {@link String#format(String, Object...)} function. The implementations can wrap well known logging frameworks and act as proxies</p>
+ * <p>Simple logger wrapper. It provides an API for explicitly using the {@link String#format(String, Object...)}
+ * function. The implementations can wrap well known logging frameworks and act as proxies</p>
  *
  * @author nikkatsa
  */
@@ -28,13 +29,15 @@ public interface YalfLogger {
             case LOG4J2:
                 return new YalfLog4J2Impl(name);
             case LOG4J:
+                return new YalfLoggerLog4jImpl(name);
             default:
-                throw new IllegalArgumentException(String.format("Unhandled Yalf logger implementation %s", loggerWrapper.toString()));
+                throw new IllegalArgumentException(String.format("Unhandled Yalf logger implementation %s",
+                        loggerWrapper.toString()));
         }
     }
 
     public static enum LoggerWrapper {
-        LOG4J2, LOG4J
+        LOG4J2, LOG4J, UNKNOWN
     }
 
     public static LoggerWrapper defaultLoggerWrapper = LoggerWrapper.LOG4J2;
