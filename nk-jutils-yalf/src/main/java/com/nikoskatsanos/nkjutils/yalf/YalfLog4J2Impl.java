@@ -6,8 +6,8 @@ import org.apache.logging.log4j.Logger;
 import java.util.function.Supplier;
 
 /**
- * <p>Implementation of {@link YalfLogger} based on <b>Log4J2</b>. <b>Log4J2</b> framework provides by default a mechanism for using the {@link String#format(String, Object...)}
- * </p>
+ * <p>Implementation of {@link YalfLogger} based on <b>Log4J2</b>. <b>Log4J2</b> framework provides by default a
+ * mechanism for using the {@link String#format(String, Object...)} </p>
  *
  * @author nikkatsa
  * @see <a href="http://logging.apache.org/log4j/2.x/">Log4j2.x</a>
@@ -17,7 +17,7 @@ public class YalfLog4J2Impl implements YalfLogger {
     private final Logger logger;
 
     public YalfLog4J2Impl(String name) {
-        logger = LogManager.getFormatterLogger();
+        logger = LogManager.getFormatterLogger(name);
     }
 
     @Override
