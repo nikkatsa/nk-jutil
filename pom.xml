@@ -207,5 +207,6 @@
         <module>nk-jutils-core</module>
         <module>nk-jutils-synthetic</module>
         <module>nk-jutils-yalf</module>
+        <module>nk-jutils-yalf-test</module>
     </modules>
 </project>
