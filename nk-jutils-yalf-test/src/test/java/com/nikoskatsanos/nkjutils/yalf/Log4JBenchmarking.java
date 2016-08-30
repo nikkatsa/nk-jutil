@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * <p>This class uses the JMH too (<a href="http://openjdk.java.net/projects/code-tools/jmh/">http://openjdk.java
+ * <p>This class uses the JMH tool (<a href="http://openjdk.java.net/projects/code-tools/jmh/">http://openjdk.java
  * .net/projects/code-tools/jmh/</a>) in order to produce a benchmark between Log4j and Log4j2. The benchmarking modes
  * used are <b><i>Throughput</i> and <i>Average time</i></b>. The {@code counter} field serves as state and reports how
  * many messages were logged during the benchmarking operations. The only parameter that needs to be tweaked in order to
@@ -30,19 +30,22 @@ import java.util.concurrent.atomic.AtomicLong;
 @State(Scope.Benchmark)
 public class Log4JBenchmarking {
 
-    private static final YalfLogger log = YalfLogger.getLogger(Log4JBenchmarking.class, YalfLogger.LoggerWrapper
-            .LOG4J2);
+    private static final YalfLogger log = YalfLogger.getLogger(Log4JBenchmarking.class, YalfLogger.LoggerWrapper.LOG4J2);
 
     private final AtomicLong counter = new AtomicLong(0L);
+
+    static {
+        System.setProperty("Log4jContextSelector", "org.apache.logging.log4j.core.async.AsyncLoggerContextSelector");
+    }
 
     public Log4JBenchmarking() {
     }
 
     @TearDown(Level.Trial)
     public void tearDown() {
-        StringUtils.centre(" ", 100, '*');
-        log.info("Messages: %d", counter.get());
-        StringUtils.centre(" ", 100, '*');
+        log.warn(StringUtils.centre(" ", 100, '*'));
+        log.warn("Messages: %d", counter.get());
+        log.warn(StringUtils.centre(" ", 100, '*'));
     }
 
     @Benchmark
