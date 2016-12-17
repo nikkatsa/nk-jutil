@@ -3,6 +3,7 @@ package com.nikoskatsanos.nkjutils.synthetic.metrics;
 import com.codahale.metrics.Counter;
 import com.codahale.metrics.Gauge;
 import com.codahale.metrics.Histogram;
+import com.codahale.metrics.Meter;
 import com.codahale.metrics.Metric;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Timer;
@@ -41,6 +42,9 @@ public class MetricsFactoryTest {
 
         final Histogram histogram = MetricsFactory.createHistogram("Histogram");
         this.assertMetric(histogram, MetricsFactory.createHistogram("Histogram"));
+
+        final Meter meter = MetricsFactory.createMeter("Meter");
+        this.assertMetric(meter, MetricsFactory.createMeter("Meter"));
 
         final Gauge<Integer> gauge = MetricsFactory.<Integer>createGauge("Gauge", () -> 1);
         assertNotNull(gauge);
