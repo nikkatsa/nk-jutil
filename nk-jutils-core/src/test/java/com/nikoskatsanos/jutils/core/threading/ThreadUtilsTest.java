@@ -18,10 +18,9 @@ public class ThreadUtilsTest {
         final NowService nowService = new SystemClockNowService();
         final long start = nowService.nowMillis();
         final long timeout = 500L;
-        final int delta = 1;
         ThreadUtils.sleepWithoutInterruption(timeout, TimeUnit.MILLISECONDS);
         final long end = nowService.nowMillis();
 
-        assertTrue(end > (start + timeout + delta));
+        assertTrue(end > (start + timeout));
     }
 }
