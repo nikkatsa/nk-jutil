@@ -1,7 +1,6 @@
 package com.nikoskatsanos.jutils.core.nativelib;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -19,7 +18,7 @@ public class NativeLibLoader {
         tmp.deleteOnExit();
         try (final InputStream is = NativeLibLoader.class.getResourceAsStream(nativeLibResource)) {
             Files.copy(is, tmp.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        } catch (final IOException e) {
+        } catch (final Exception e) {
             throw new RuntimeException(String.format("Failed to load native lib resource %s", nativeLibResource), e);
         }
 

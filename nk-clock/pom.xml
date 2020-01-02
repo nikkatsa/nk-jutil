@@ -52,7 +52,7 @@
     <dependencies>
         <dependency>
             <groupId>com.nikoskatsanos</groupId>
-            <artifactId>nk-jutils-core</artifactId>
+            <artifactId>nk-jutils-native</artifactId>
             <version>${project.version}</version>
         </dependency>
 

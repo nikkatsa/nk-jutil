@@ -1,8 +1,6 @@
 package com.nikoskatsanos.nkjutils.synthetic.metrics;
 
 import com.nikoskatsanos.jutils.core.CloseableUtils;
-import com.nikoskatsanos.jutils.core.time.NowService;
-import com.nikoskatsanos.jutils.core.time.SystemClockNowService;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

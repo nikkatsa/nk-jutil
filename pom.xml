@@ -257,10 +257,11 @@
     </reporting>
 
     <modules>
+        <module>nk-jutils-native</module>
+        <module>nk-clock</module>
         <module>nk-jutils-core</module>
         <module>nk-jutils-synthetic</module>
         <module>nk-jutils-yalf</module>
         <module>nk-jutils-yalf-test</module>
-        <module>nk-clock</module>
     </modules>
 </project>

@@ -1,7 +1,7 @@
 package com.nikoskatsanos.jutils.core.threading;
 
-import com.nikoskatsanos.jutils.core.time.NowService;
-import com.nikoskatsanos.jutils.core.time.SystemClockNowService;
+import com.nikoskatsanos.time.NanoClock;
+import com.nikoskatsanos.time.WallNanoClock;
 import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
@@ -15,11 +15,11 @@ public class ThreadUtilsTest {
 
     @Test
     public void testSleepWithoutInterruption() {
-        final NowService nowService = new SystemClockNowService();
-        final long start = nowService.nowMillis();
+        final NanoClock clock = new WallNanoClock();
+        final long start = clock.currentTimeNanos();
         final long timeout = 500L;
         ThreadUtils.sleepWithoutInterruption(timeout, TimeUnit.MILLISECONDS);
-        final long end = nowService.nowMillis();
+        final long end = clock.currentTimeNanos();
 
         assertTrue(end > (start + timeout));
     }
